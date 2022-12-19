@@ -1,6 +1,8 @@
 ﻿
 using Entidades;
+using Newtonsoft.Json;
 using System.Net.Http.Json;
+using System.Text;
 
 Console.WriteLine("¡TEMAS ADICIONALES!\n");
 
@@ -30,3 +32,29 @@ var url = "https://localhost:7103/WeatherForecast";
 var respSeriealizada = await httpClient.GetFromJsonAsync<List<WeatherForecast>>(url);
 
 Console.WriteLine($"\nNumero de elementos: { respSeriealizada!.Count }");
+
+/* Post usando PostAsJsonAsync */
+var wf = new WeatherForecast() { 
+    Date = DateTime.Now,
+    Summary = "¡Que calor!",
+    TemperatureC = 40
+};
+
+var respWF = await httpClient.PostAsJsonAsync(url, wf);
+
+if (resp.IsSuccessStatusCode) {
+    var cuerpoWF = await respWF.Content.ReadAsStringAsync();
+
+    Console.WriteLine($"El cuerpo de la respuesta es: { cuerpoWF }");
+}
+
+/* Post usando PostAsync */
+var tempSeriealizada = JsonConvert.SerializeObject(wf);
+var stringContent = new StringContent(tempSeriealizada, Encoding.UTF8, "application/json");
+var resp3 = await httpClient.PostAsync(url, stringContent);
+
+if (resp3.IsSuccessStatusCode) {
+    var cuerpoWF = await respWF.Content.ReadAsStringAsync();
+
+    Console.WriteLine($"El cuerpo de la respuesta es: { cuerpoWF }");
+}

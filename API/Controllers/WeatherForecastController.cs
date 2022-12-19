@@ -30,5 +30,12 @@ namespace API.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public ActionResult<int> Post(WeatherForecast weatherForecast) {
+            Console.WriteLine(weatherForecast.Summary);
+
+            return 1;
+        }
     }
 }
