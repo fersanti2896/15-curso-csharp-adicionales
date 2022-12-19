@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemasAdicionales", "TemasAdicionales.csproj", "{524CCA62-4124-4786-91A5-AC3905521736}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemasAdicionales", "TemasAdicionales.csproj", "{524CCA62-4124-4786-91A5-AC3905521736}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "..\API\API.csproj", "{4EF5FFD2-781C-4F33-91F1-7F4D58CE8FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "..\API\API.csproj", "{4EF5FFD2-781C-4F33-91F1-7F4D58CE8FF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "..\Entidades\Entidades.csproj", "{913511C3-0B21-4753-9C95-59B48121260F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4EF5FFD2-781C-4F33-91F1-7F4D58CE8FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EF5FFD2-781C-4F33-91F1-7F4D58CE8FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EF5FFD2-781C-4F33-91F1-7F4D58CE8FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913511C3-0B21-4753-9C95-59B48121260F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913511C3-0B21-4753-9C95-59B48121260F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913511C3-0B21-4753-9C95-59B48121260F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913511C3-0B21-4753-9C95-59B48121260F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
