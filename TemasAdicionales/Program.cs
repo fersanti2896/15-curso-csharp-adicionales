@@ -132,3 +132,15 @@ static void configurar(ServiceCollection services) {
     /* Clientes Tipados */
     services.AddHttpClient<IClienteWF, ClienteWF>();
 }
+
+var rutaArchivo = @"C:\Users\josantiago\Documents\Cursos Udemy\Programando en C# de Principiante a Profesional\S15 - Temas Adicionales\TemasAdicionales\Ejemplo.txt";
+var nombreArchivo = Path.GetFileName(rutaArchivo);
+
+using (var contenido = new MultipartFormDataContent()) {
+    using (var fs = File.OpenRead(rutaArchivo)) {
+        contenido.Add(new StreamContent(fs), "file", nombreArchivo);
+        
+        var resp4 = await clienteWF.PostAsync("archivo", contenido);
+        resp4.EnsureSuccessStatusCode();
+    }
+}

@@ -13,10 +13,12 @@ namespace API.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IWebHostEnvironment env;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWebHostEnvironment env)
         {
             _logger = logger;
+            this.env = env;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -43,6 +45,24 @@ namespace API.Controllers
             Console.WriteLine(valor);
 
             return valor!.ToUpper();
+        }
+
+        [HttpPost("archivo")]
+        public async Task<ActionResult> PostearArchivo([FromForm] IFormFile file) {
+            var nameArchivo = $"{ Guid.NewGuid() }{ Path.GetExtension(file.FileName) }";
+            string folder = Path.Combine(env.WebRootPath, "carpeta");
+
+            if (!Directory.Exists(folder)) { 
+                Directory.CreateDirectory(folder);
+            }
+
+            string ruta = Path.Combine(folder, nameArchivo);
+
+            using (var sf = System.IO.File.Create(ruta)) { 
+                await file.OpenReadStream().CopyToAsync(sf);
+            }
+
+            return Ok();
         }
     }
 }
