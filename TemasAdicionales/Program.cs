@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;
+using TemasAdicionales.Clientes;
 using TemasAdicionales.Ejercicios;
 
 Console.WriteLine("¡TEMAS ADICIONALES!\n");
@@ -109,6 +110,12 @@ var respWF2 = await clienteWF.GetAsync("mayusculas");
 
 Console.WriteLine($"Ejemplo (WF) Exitoso: { respWF2.IsSuccessStatusCode }");
 
+/* Ejemplo de Clientes Tipados */
+var clienteWF2 = servicios.GetRequiredService<IClienteWF>();
+var listado = await clienteWF2.Obtener();
+
+Console.WriteLine($"Cantidad WFs: { listado.Count }");
+
 static void configurar(ServiceCollection services) {
     //services.AddHttpClient();
 
@@ -121,4 +128,7 @@ static void configurar(ServiceCollection services) {
         opc.BaseAddress = new Uri("https://localhost:7103/WeatherForecast/");
         opc.DefaultRequestHeaders.Add("valor", "Soy un cliente nombrado");
     });
+
+    /* Clientes Tipados */
+    services.AddHttpClient<IClienteWF, ClienteWF>();
 }
