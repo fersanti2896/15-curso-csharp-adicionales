@@ -133,6 +133,7 @@ static void configurar(ServiceCollection services) {
     services.AddHttpClient<IClienteWF, ClienteWF>();
 }
 
+/* Enviando un archivo a la WEB API */
 var rutaArchivo = @"C:\Users\josantiago\Documents\Cursos Udemy\Programando en C# de Principiante a Profesional\S15 - Temas Adicionales\TemasAdicionales\Ejemplo.txt";
 var nombreArchivo = Path.GetFileName(rutaArchivo);
 
@@ -143,4 +144,14 @@ using (var contenido = new MultipartFormDataContent()) {
         var resp4 = await clienteWF.PostAsync("archivo", contenido);
         resp4.EnsureSuccessStatusCode();
     }
+}
+
+/* Descargando archivo */
+var rutaCarpeta = "../../../";
+var urlArchivo = @"https://localhost:7103/carpeta/d31387e7-15d7-49ff-ad13-67de43b26722.txt";
+var stream = await httpClientF.GetStreamAsync(urlArchivo);
+var nombreArchivo2 = Path.GetFileName(urlArchivo);
+
+using (var fs = File.Create(Path.Combine(rutaCarpeta, nombreArchivo2))) {
+    await stream.CopyToAsync(fs);
 }
