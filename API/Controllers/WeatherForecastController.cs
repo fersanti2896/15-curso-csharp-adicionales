@@ -37,5 +37,10 @@ namespace API.Controllers
 
             return 1;
         }
+
+        [HttpGet("mayusculas")]
+        public ActionResult<string> GetMayus([FromHeader] string? valor = "Soy Fernando") {
+            return valor!.ToUpper();
+        }
     }
 }

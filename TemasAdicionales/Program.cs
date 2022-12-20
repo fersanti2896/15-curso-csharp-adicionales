@@ -1,5 +1,6 @@
 ﻿
 using Entidades;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;
@@ -68,4 +69,35 @@ if (resp3.IsSuccessStatusCode) {
     }
 } else { 
     Console.WriteLine("Otro tipo de situación");
+}
+
+/* Enviando cabeceras */
+var url2 = "https://localhost:7103/WeatherForecast/mayusculas";
+
+Console.WriteLine($"\nEjemplo 1:");
+Console.WriteLine(await httpClient.GetStringAsync(url2));
+
+using (var peticion = new HttpRequestMessage(HttpMethod.Get, url2)) {
+    peticion.Headers.Add("valor", "Soy Marisol");
+
+    var respPet = await httpClient.SendAsync(peticion);
+
+    Console.WriteLine($"\nEjemplo 2:");
+    Console.WriteLine(await respPet.Content.ReadAsStringAsync());
+}
+
+/* HttpClientFactory */
+var serviceCollection = new ServiceCollection();
+
+configurar(serviceCollection);
+var servicios = serviceCollection.BuildServiceProvider();
+var httpClientFactory = servicios.GetRequiredService<IHttpClientFactory>();
+
+var httpClientF = httpClientFactory.CreateClient();
+var respFac = await httpClientF.GetAsync(url2);
+
+Console.WriteLine($"Ejemplo 1 Existoso: { respFac.IsSuccessStatusCode }");
+
+static void configurar(ServiceCollection services) {
+    services.AddHttpClient();
 }
