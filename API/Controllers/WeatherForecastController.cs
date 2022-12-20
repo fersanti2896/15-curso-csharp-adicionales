@@ -40,6 +40,8 @@ namespace API.Controllers
 
         [HttpGet("mayusculas")]
         public ActionResult<string> GetMayus([FromHeader] string? valor = "Soy Fernando") {
+            Console.WriteLine(valor);
+
             return valor!.ToUpper();
         }
     }

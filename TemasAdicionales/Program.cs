@@ -98,6 +98,27 @@ var respFac = await httpClientF.GetAsync(url2);
 
 Console.WriteLine($"Ejemplo 1 Existoso: { respFac.IsSuccessStatusCode }");
 
+/* Ejemplo de Clientes Nombrados */
+var clienteTareas = httpClientFactory.CreateClient("tareas");
+var respTareas = await clienteTareas.GetAsync("");
+
+Console.WriteLine($"Ejemplo (Tareas) Exitoso: { respTareas.IsSuccessStatusCode }");
+
+var clienteWF = httpClientFactory.CreateClient("weatherforecast");
+var respWF2 = await clienteWF.GetAsync("mayusculas");
+
+Console.WriteLine($"Ejemplo (WF) Exitoso: { respWF2.IsSuccessStatusCode }");
+
 static void configurar(ServiceCollection services) {
-    services.AddHttpClient();
+    //services.AddHttpClient();
+
+    /* Clientes nombrados */
+    services.AddHttpClient("tareas", opc => {
+        opc.BaseAddress = new Uri("https://jsonplaceholder.typicode.com/todos/");
+    });
+
+    services.AddHttpClient("weatherforecast", opc => {
+        opc.BaseAddress = new Uri("https://localhost:7103/WeatherForecast/");
+        opc.DefaultRequestHeaders.Add("valor", "Soy un cliente nombrado");
+    });
 }
