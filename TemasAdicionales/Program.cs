@@ -3,6 +3,7 @@ using Entidades;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using System.Text;
+using TemasAdicionales.Ejercicios;
 
 Console.WriteLine("¡TEMAS ADICIONALES!\n");
 
@@ -54,7 +55,17 @@ var stringContent = new StringContent(tempSeriealizada, Encoding.UTF8, "applicat
 var resp3 = await httpClient.PostAsync(url, stringContent);
 
 if (resp3.IsSuccessStatusCode) {
+    Console.WriteLine("Todo bien");
+} else if (resp3.StatusCode ==  System.Net.HttpStatusCode.BadRequest) {
     var cuerpoWF = await respWF.Content.ReadAsStringAsync();
+    var camposErrors = Utilidades.ExtraerErroresWebAPI(cuerpoWF);
 
-    Console.WriteLine($"El cuerpo de la respuesta es: { cuerpoWF }");
+    foreach (var campo in camposErrors) {
+        Console.WriteLine($"Key: { campo.Key }");
+        foreach (var error in campo.Value) {
+            Console.WriteLine($"{ error }");
+        }
+    }
+} else { 
+    Console.WriteLine("Otro tipo de situación");
 }
